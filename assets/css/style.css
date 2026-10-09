@@ -1,0 +1,179 @@
+/* ===== Kaon stylesheet: warm cream and orange, like a home kitchen ===== */
+
+/* Colours live here once, so changing the theme means editing only these lines */
+:root {
+    --cream: #fffbf5;        /* page background */
+    --cream-dark: #f5e9d3;   /* flash message background */
+    --orange: #e8742a;       /* main accent: links, buttons, badges */
+    --orange-dark: #c95e18;  /* hover state of the accent */
+    --ink: #3a2a1c;          /* main text */
+    --ink-soft: #7a6652;     /* secondary text: labels, dates */
+    --line: #ecdcc0;         /* borders and dividers */
+}
+
+/* Padding and borders count inside an element's width, which keeps the layout easier to predict */
+* { box-sizing: border-box; }
+
+/* Form controls don't inherit the page font by default, so set it for them too */
+html, body, button, input, select, textarea {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+}
+
+/* The body is a column and <main> grows (flex: 1), which pushes the footer to the bottom on short pages */
+body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main { flex: 1; padding-top: 3rem; padding-bottom: 3rem; } /* the gap between the navbar and the page content */
+.container { width: 100%; max-width: 960px; margin: 0 auto; padding-left: 1.25rem; padding-right: 1.25rem; } /* centred column; the side padding is the gutter on phones (left/right only, so it cannot wipe out main's top and bottom padding) */
+
+h1, h2, h3 { font-weight: 300; line-height: 1.25; margin: 0 0 1rem; }
+h1 { font-size: 2rem; }
+h3 { font-size: 1.25rem; }
+p { margin: 0 0 1rem; }
+
+a { color: var(--orange); text-decoration: none; }
+a:hover { color: var(--orange-dark); text-decoration: underline; }
+
+/* Header */
+.site-header { border-bottom: 1px solid var(--line); }
+.header-inner { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; padding-bottom: 1rem; }
+.brand { font-size: 1.5rem; letter-spacing: 0.04em; color: var(--orange); }
+.brand:hover { text-decoration: none; }
+.site-nav { display: flex; align-items: center; gap: 1.5rem; }
+.site-nav a { color: var(--ink); }
+.site-nav a:hover { color: var(--orange); text-decoration: none; }
+.inline-form { display: inline; margin: 0; } /* small forms (Log out, Delete) that sit in a line of text */
+.link-button { background: none; border: 0; padding: 0; color: var(--ink-soft); cursor: pointer; font-size: 1rem; } /* a button that looks like a link */
+.link-button:hover { color: var(--orange); }
+
+.nav-toggle, .nav-burger { display: none; } /* the phone menu controls stay hidden on bigger screens */
+
+/* Flash + errors */
+.flash { padding: 0.75rem 1rem; margin-bottom: 1.5rem; border-left: 3px solid var(--orange); background: var(--cream-dark); }
+.field-error { color: var(--orange-dark); font-size: 0.875rem; margin: 0.25rem 0 0.75rem; }
+
+/* Forms */
+.form-card { max-width: 420px; margin: 0 auto; padding: 2rem; background: #fff; border: 1px solid var(--line); border-radius: 4px; }
+label { display: block; margin: 1rem 0 0.25rem; font-size: 0.875rem; color: var(--ink-soft); }
+input[type=text], input[type=email], input[type=password], input[type=search], input[type=number], select, textarea {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    color: var(--ink);
+    font-size: 1rem;
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--orange); } /* the orange border replaces the default focus ring */
+.form-alt { margin: 1.5rem 0 0; font-size: 0.875rem; color: var(--ink-soft); text-align: center; }
+
+/* Buttons: every <a class="btn"> and <button class="btn"> is exactly the same size.
+   line-height is set here because links inherit the page's 1.6 while real buttons default to "normal", which made them differ. */
+.btn {
+    display: inline-block;
+    margin: 0;
+    padding: 0.6rem 1.25rem;
+    line-height: 1.4;
+    text-align: center;
+    background: var(--orange);
+    border: 1px solid var(--orange);
+    border-radius: 3px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.btn:hover { background: var(--orange-dark); border-color: var(--orange-dark); text-decoration: none; color: #fff; }
+.form-card .btn, .comment-form .btn { margin-top: 1.5rem; }                   /* room between the last field and the button */
+.btn-outline { background: transparent; color: var(--orange); }              /* hollow version of the button */
+.btn-outline:hover { background: var(--orange); color: #fff; }
+.btn-fav-on { background: var(--orange); color: #fff; }                      /* filled while a recipe is saved; app.js swaps this class */
+
+/* Recipe cards */
+.card { padding: 1.5rem 0; border-bottom: 1px solid var(--line); }
+.card h3 { margin: 0.5rem 0; }
+.card-desc { color: var(--ink); }
+.badge { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--orange); } /* the category label */
+.meta, .edited { font-size: 0.875rem; color: var(--ink-soft); } /* "by name . date" and the "edited" tag */
+.fav-form { margin: 0; }
+
+/* Footer */
+.site-footer { border-top: 1px solid var(--line); padding: 1.5rem 0; text-align: center; color: var(--ink-soft); font-size: 0.875rem; }
+.site-footer p { margin: 0; }
+
+/* Mobile nav: on phones the links collapse behind a burger icon.
+   The burger is a label for a hidden checkbox, so the menu opens with CSS only (no JavaScript). */
+@media (max-width: 640px) {
+    .nav-burger { display: block; width: 28px; cursor: pointer; padding: 8px 0; }
+    /* The three bars of the burger: one real element plus its ::before and ::after, 7px above and below */
+    .nav-burger span, .nav-burger span::before, .nav-burger span::after {
+        display: block; height: 2px; background: var(--orange); content: ''; position: relative;
+    }
+    .nav-burger span::before { top: -7px; position: absolute; width: 100%; }
+    .nav-burger span::after { top: 7px; position: absolute; width: 100%; }
+    .header-inner { flex-wrap: wrap; }
+    .form-card { padding: 1.25rem; }
+    .site-nav { display: none; flex-direction: column; align-items: flex-start; gap: 0.75rem; width: 100%; padding-top: 1rem; }
+    .nav-toggle:checked ~ .site-nav { display: flex; } /* ticked checkbox = menu open */
+}
+
+/* Recipe pages */
+[hidden] { display: none !important; } /* makes the hidden attribute always win, e.g. the empty-favorites message */
+textarea { resize: vertical; }
+.form-wide { max-width: 640px; }       /* the recipe and comment forms get more room */
+.form-wide .btn + .btn { margin-left: 0.5rem; }
+.filter-form { margin-bottom: 1.5rem; }
+.filter-form .btn { margin-top: 1rem; }
+.check-label { display: flex; align-items: center; gap: 0.5rem; color: var(--ink); font-size: 1rem; }
+.check-label input { width: auto; }
+.section-title { font-size: 1.25rem; margin-top: 2rem; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 1rem 0; } /* row of Save / Edit / Delete buttons */
+.actions .btn { margin-top: 0; }
+.btn-danger { background: transparent; color: #b3261e; border-color: #b3261e; }                 /* red so Delete stands apart */
+.btn-danger:hover { background: #b3261e; border-color: #b3261e; color: #fff; }
+
+/* Ingredient rows in the recipe form: amount | unit | name | Remove */
+.ingredient-row { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; }
+.ingredient-row input, .ingredient-row select { min-width: 0; } /* lets the boxes shrink instead of overflowing on narrow screens */
+.ingredient-row input[name="ingredient_amounts[]"] { flex: 0 0 5rem; width: 5rem; }     /* small fixed width for the number */
+.ingredient-row select { flex: 0 0 5.5rem; width: 5.5rem; padding-left: 0.5rem; padding-right: 0.25rem; } /* unit dropdown */
+.ingredient-row input[name="ingredients[]"] { flex: 1 1 auto; }                         /* the name takes whatever room is left */
+.amount { font-weight: 400; } /* amount + unit on the recipe page, a touch heavier than the light body text */
+/* Phone: amount | unit share the first line; the ingredient name and the (full-size) Remove button share the second.
+   The 45% / 50% starting widths are what push the name onto its own line; the boxes then grow to fill each line. */
+@media (max-width: 640px) {
+    .ingredient-row { flex-wrap: wrap; margin-bottom: 0.75rem; }
+    .ingredient-row input[name="ingredient_amounts[]"], .ingredient-row select { flex: 1 1 45%; width: auto; }
+    .ingredient-row input[name="ingredients[]"] { flex: 1 1 50%; }
+}
+/* Ingredient suggestions (app.js): a small list under the box being typed in, placed with inline left/top/width */
+.suggestions { position: absolute; z-index: 10; margin: 0; padding: 0.25rem 0; list-style: none; max-height: 15rem; overflow-y: auto; background: #fff; border: 1px solid var(--line); border-radius: 3px; box-shadow: 0 4px 12px rgba(58, 42, 28, 0.12); }
+.suggestions li { padding: 0.5rem 0.75rem; color: var(--ink); cursor: pointer; }
+.suggestions li:hover, .suggestions li.active { background: var(--cream-dark); color: var(--orange-dark); } /* hover and arrow-key highlight look the same */
+#add-ingredient { margin-top: 0.25rem; }
+.ingredient-row .btn { margin-top: 0; }
+.recipe ul { padding-left: 1.25rem; margin: 0; }
+
+/* "What to cook?" questions: one question per page, answers as big tappable choices */
+.wizard fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.wizard legend { padding: 0; margin-bottom: 0.75rem; font-size: 1.25rem; }
+.wizard-progress { display: block; width: 100%; max-width: 420px; height: 6px; margin: 0 0 1.5rem; accent-color: var(--orange); } /* the "question 2 of 3" bar */
+.choice { display: flex; align-items: center; gap: 0.75rem; margin: 0 0 0.5rem; padding: 0.65rem 0.9rem; background: #fff; border: 1px solid var(--line); border-radius: 3px; color: var(--ink); font-size: 1rem; cursor: pointer; }
+.choice:hover { border-color: var(--orange); }
+.choice input { flex: 0 0 auto; width: auto; margin: 0; accent-color: var(--orange); }
+.choice input:checked + span { color: var(--orange-dark); font-weight: 400; } /* the picked choice stands out */
+
+/* Comments */
+.comment { padding: 1rem 0; border-bottom: 1px solid var(--line); }
+.comment p { margin-bottom: 0.25rem; }
+.comment .actions { margin: 0.5rem 0 0; }
+.comment-form { margin-top: 1.5rem; }
+.flash-error { border-left-color: #b3261e; } /* error messages get a red stripe instead of orange */
